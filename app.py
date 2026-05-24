@@ -15,6 +15,121 @@ st.set_page_config(
     layout="wide"
 )
 
+# ================= LOGIN SYSTEM =================
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if "forgot_password" not in st.session_state:
+    st.session_state.forgot_password = False
+
+USERNAME = "shivam"
+PASSWORD = "1234"
+
+if not st.session_state.logged_in:
+
+    st.markdown("""
+    <style>
+    .login-box{
+        background:#17357f;
+        padding:40px;
+        border-radius:25px;
+        border:3px solid #00e5ff;
+        box-shadow:0 0 25px #00e5ff;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class='login-box'>
+
+    <h1 style='text-align:center;
+    color:#00e5ff;'>
+    🔐 COVID DASHBOARD LOGIN
+    </h1>
+
+    <h3 style='text-align:center;
+    color:white;'>
+    Secure Access System
+    </h3>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    username = st.text_input("👤 Username")
+
+    password = st.text_input(
+        "🔑 Password",
+        type="password"
+    )
+
+    c1,c2 = st.columns(2)
+
+    with c1:
+
+        if st.button("🔓 Login"):
+
+            if (
+                username == USERNAME and
+                password == PASSWORD
+            ):
+
+                st.session_state.logged_in = True
+                st.success("✅ Login Successful")
+                st.rerun()
+
+            else:
+
+                st.error("❌ Wrong Username or Password")
+
+    with c2:
+
+        if st.button("❓ Forgot Password"):
+
+            st.session_state.forgot_password = True
+
+    # ================= FORGOT PASSWORD =================
+
+    if st.session_state.forgot_password:
+
+        st.markdown("""
+        <div class='box'>
+        <h2 style='color:#ffd700;'>
+        🔑 Forgot Password Recovery
+        </h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+        answer = st.text_input(
+            "What is your favorite color?"
+        )
+
+        if st.button("Recover Password"):
+
+            if answer.lower() == "blue":
+
+                st.success("""
+                ✅ Password Recovery Successful
+
+                Username : shivam
+                Password : 1234
+                """)
+
+            else:
+
+                st.error("❌ Wrong Security Answer")
+
+    st.stop()
+
+# ================= LOGOUT =================
+
+st.sidebar.markdown("---")
+
+if st.sidebar.button("🚪 Logout"):
+
+    st.session_state.logged_in = False
+    st.rerun()
+
 # ================= CSS =================
 st.markdown("""
 <style>
